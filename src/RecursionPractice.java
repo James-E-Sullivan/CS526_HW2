@@ -12,6 +12,24 @@ public class RecursionPractice {
         return 0;       // base case
     }
 
+
+    private static int findFixedSumPairs(int[] a, int k){
+        int startIndex;
+        int compareIndex;
+
+    }
+
+    private static int recursiveFixedSumPairs(int[] a, int k, int i, int j){
+        int sum;
+        sum = i + j;
+        if (sum == k) {
+            System.out.println("a[" + i + "] = " + a[i] + ", a[" + j + "] = " + j);
+        }else if(sum > k){
+
+        }
+    }
+
+
     public static void main(String[] args) {
         int testProduct = recursiveProduct(-3, 2);
         System.out.println(testProduct);
