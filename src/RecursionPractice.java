@@ -12,26 +12,47 @@ public class RecursionPractice {
         return 0;       // base case
     }
 
-
-    private static int findFixedSumPairs(int[] a, int k){
-        int startIndex;
-        int compareIndex;
-
+    // This method is not recursive
+    private static void findFixedSumPairs(int[] a, int k){
+        int index = 0;
+        if (index < a.length-2){
+            recursiveFixedSumPairs(a, k, index, index+1);
+        }
     }
 
-    private static int recursiveFixedSumPairs(int[] a, int k, int i, int j){
+    // This method is recursive
+    private static void recursiveFixedSumPairs(int[] a, int k, int i, int j){
         int sum;
-        sum = i + j;
-        if (sum == k) {
-            System.out.println("a[" + i + "] = " + a[i] + ", a[" + j + "] = " + j);
-        }else if(sum > k){
-
+        sum = a[i] + a[j];      // need to rearrange to avoid index out of bounds at start
+        if (sum == k) {         // add more under this if statement. Currently it ends after one print.
+            System.out.println("a[" + i + "] = " + a[i] + ", a[" + j + "] = " + a[j]);
+        }else if(sum < k){
+            if (j < a.length - 1){
+                recursiveFixedSumPairs(a, k, i, j+1);
+            }else if (i < a.length -2){
+                recursiveFixedSumPairs(a, k, i+1, i+2);
+            }
         }
     }
 
 
     public static void main(String[] args) {
-        int testProduct = recursiveProduct(-3, 2);
-        System.out.println(testProduct);
+        System.out.print("\nRecursive product: ");
+        int m, n, p;
+        m = 10; n = -20;
+        p = recursiveProduct(m, n);
+        System.out.println(m + " times " + n + " is " + p);
+
+        System.out.println("\nFixed sum pairs: ");
+        int[] a = {1, 5, 8, 11, 12, 14, 15, 20, 21, 22, 23, 25, 28, 30, 34, 36};
+        int k;
+        k = 13;
+        System.out.print("k = " + k + "\na = [");
+        for (int i=0; i<a.length-1; i++){
+            System.out.print(a[i] + ", ");
+        }
+        System.out.println(a[a.length-1] + "]\n");
+        findFixedSumPairs(a, k);
+        System.out.println();
     }
 }
