@@ -6,8 +6,8 @@ public class InfixEvaluation {
         final String operatorString = "+-*/";                   // String of possible operators
 
         LinkedStack <String> buffer = new LinkedStack<>();      // stack for opening parentheses
-        LinkedStack <Integer> operand = new LinkedStack<>();    // stack for operand integers
-        LinkedStack <String> operator = new LinkedStack<>();    // stack for operators
+        LinkedStack <Integer> operandStack = new LinkedStack<>();    // stack for operand integers
+        LinkedStack <String> operatorStack = new LinkedStack<>();    // stack for operators
 
         String[] splitExpression = expression.split(" ");       // splits expression string by spaces
 
@@ -16,32 +16,37 @@ public class InfixEvaluation {
             if (opening.contains(c))                // check if String is an opening parenthesis
                 buffer.push(c);
             else if (operatorString.contains(c))    // check if String is an operator
-                operator.push(c);
+                operatorStack.push(c);
             else if (closing.contains(c)){          // check if String is a closing parenthesis
-                int operand2 = operand.pop();       // top of operand stack is 2nd operand
-                int operand1 = operand.pop();       // next in operand stack is 1st operand
+                int operand2 = operandStack.pop();       // top of operand stack is 2nd operand
+                int operand1 = operandStack.pop();       // next in operand stack is 1st operand
 
-
-                if (operator.top().equals("+")){        // can be changed to a switch statement
-                    operator.pop();
-                    operand.push(operand1 + operand2);
-                }else if (operator.top().equals("-")){
-                    operator.pop();
-                    operand.push(operand1 - operand2);
-                }else if (operator.top().equals("*")){
-                    operator.pop();
-                    operand.push(operand1 * operand2);
-                }else if (operator.top().equals("/")){
-                    operator.pop();
-                    operand.push(operand1 / operand2);
+                String operator = operatorStack.top();      // Assigns most recent operator in operatorStack
+                switch(operator){
+                    case "+":
+                        operatorStack.pop();
+                        operandStack.push(operand1 + operand2);
+                        break;
+                    case "-":
+                        operatorStack.pop();
+                        operandStack.push(operand1 - operand2);
+                        break;
+                    case "*":
+                        operatorStack.pop();
+                        operandStack.push(operand1 * operand2);
+                        break;
+                    case "/":
+                        operatorStack.pop();
+                        operandStack.push(operand1 / operand2);
+                        break;
                 }
 
                 buffer.pop();
             }
             else                                    // assumes String is a number
-                operand.push(Integer.parseInt(c));  // converts to int & pushes to operand stack
+                operandStack.push(Integer.parseInt(c));  // converts to int & pushes to operand stack
         }
-        return (operand.pop());
+        return (operandStack.pop());
     }
 
     public static void main(String[] args) {
