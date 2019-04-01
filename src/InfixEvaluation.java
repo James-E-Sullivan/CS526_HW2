@@ -1,3 +1,5 @@
+import java.io.FileInputStream;
+
 public class InfixEvaluation {
 
     public static int evaluate(String expression){
@@ -50,6 +52,10 @@ public class InfixEvaluation {
     }
 
     public static void main(String[] args) {
+
+        FileInputStream expressionFile = new FileInputStream("/resources/infix_expressions.txt"); // fix this
+
+
         String s1 = "( ( 2 + 5 ) * 3 )";
         System.out.println(evaluate(s1));
 
